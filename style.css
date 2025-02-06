@@ -1,0 +1,53 @@
+/* roboto-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/roboto-v30-latin-regular.woff2') format('woff2');
+}
+
+:root {
+  --main-color: #16161d;
+  --text-color: #f9f6ee;
+}
+
+* {
+  font-family: "Roboto";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--text-color);
+  background-color: var(--main-color);
+}
+
+p {
+  padding: 1em;
+  text-align: justify;
+}
+
+body {
+  max-width: 100%;
+  background-color: var(--main-color);
+}
+
+@media (min-aspect-ratio: 1/1) {
+  #configurator {
+    grid-template-areas:
+      "ha hb hc"
+      "ma mb mc"
+      "fa fb fc";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
+  }
+}
+
+#menuelement {
+  grid-area: ha;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+  background-color: var(--text-color);
+}
