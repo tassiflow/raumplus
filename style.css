@@ -10,6 +10,7 @@
 :root {
   --main-color: #16161d;
   --text-color: #f9f6ee;
+  --accent-color: #0060df;
 }
 
 * {
@@ -21,33 +22,183 @@
   background-color: var(--main-color);
 }
 
-p {
-  padding: 1em;
-  text-align: justify;
-}
+/* page layout */
 
 body {
-  max-width: 100%;
   background-color: var(--main-color);
-}
-
-@media (min-aspect-ratio: 1/1) {
-  #configurator {
-    grid-template-areas:
-      "ha hb hc"
-      "ma mb mc"
-      "fa fb fc";
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 3fr 1fr;
-  }
-}
-
-#menuelement {
-  grid-area: ha;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 canvas {
-  max-width: 100%;
-  height: auto;
   background-color: var(--text-color);
+}
+
+#mainView {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+header {
+  background-color: transparent;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  z-index: 11;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+main {
+  background-color: transparent;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  margin-top: 6rem;
+}
+
+#navigation {
+  background-color: transparent;
+  display: flex;
+  flex-flow: row;
+  align-items: flex-end;
+  position: absolute;
+  z-index: 9;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+#menu {
+  background-color: transparent;
+  position: absolute;
+  display: flex;
+  z-index: 12;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* form elements */
+
+fieldset>* {
+  margin: 0.5rem;
+}
+
+#menu *,
+#navigation * {
+  background-color: var(--main-color);
+  color: var(--text-color);
+}
+
+#toggleMenu {
+  display: flex;
+  flex-flow: column;
+}
+
+#toggleZoom {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+#toggleZoom * {
+  background-color: transparent;
+  color: var(--main-color);
+}
+
+#toggleZoom>* {
+  margin-right: 1rem;
+}
+
+#logo {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+#logo * {
+  background-color: transparent;
+  color: var(--main-color);
+  text-shadow: rgba(0, 0, 0, 0.3) 0 5px 10px;
+}
+
+#logo>* {
+  margin-left: 1rem;
+  font-size: 2rem;
+}
+
+#detailView,
+#attractorView {
+  max-width: 200px;
+  max-height: 200px;
+  border: 2px solid var(--accent-color);
+  border-radius: 4px;
+}
+
+#configurator {
+  display: flex
+}
+
+form {
+  z-index: 2;
+  background-color: transparent;
+  height: auto;
+}
+
+.expandable {
+  max-width: 300px;
+  padding-top: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.expandable>* {
+  margin: 0.5rem;
+  margin-top: 0rem;
+}
+
+.formElement {
+  background-color: transparent;
+  display: flex;
+  margin: 1rem;
+  height: fit-content;
+  width: fit-content;
+}
+
+.formElement>div {
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* buttons and controls */
+
+#xPos,
+#yPos {
+  width: 4rem;
+}
+
+#navControl {
+  width: 6rem;
+  height: 6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.toggle {
+  width: 4rem;
+  height: 4rem;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.toggle i {
+  font-size: 2rem;
 }

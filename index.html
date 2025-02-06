@@ -31,147 +31,188 @@
 </head>
 
 <body onload="initializeApp()">
+    <canvas id="mainView" width="1000" height="1000"></canvas>
     <header>
+        <div id="logo">
+            <i class="fa-solid fa-play"></i>
+            <h1>APPNAME</h1>
+            <a href="about.html"><i class="fa-solid fa-circle-info"></i></a>
+        </div>
     </header>
+    <div id="menu">
+        <div id="toggleMenu" class="expandable">
+            <h2>MENU</h2>
+            <button type="button" id="export" name="export" value="export" class="button"
+                onclick="downloadFile()"><label for="export">export <i
+                        class="fa-solid fa-file-export"></i></label></button>
+            <label for="import">import <i class="fa-solid fa-file-import"></i></label>
+            <input type="file" id="import" name="import" value="" class="button" onclick="" accept=".json" />
+            <label for="bCol">background color <i class="fa-solid fa-fill-drip"></i></label>
+            <input type="color" id="bCol" name="bCol" value="#f9f6ee" class="colpicker" oninput="resizeCanvas()" />
+            <label for="sCol">shape color <i class="fa-solid fa-paintbrush"></i></label>
+            <input type="color" id="sCol" name="sCol" value="#4c0013" class="colpicker" oninput="resizeCanvas()" />
+            <a href="" class="button"><label for="reset">reset <i class="fa-solid fa-rotate-right"></i></label></a>
+        </div>
+        <button type="button" id="menuBut" name="menuBut" value="menuBut" class="button toggle"
+            onclick="toggleFunction('toggleMenu')"><i class="fa-solid fa-bars"></i></button>
+    </div>
     <main>
-        <section>
-            <div>
-                <form id="configurator">
-                    <canvas id="mainView" width="1000" height="1000"></canvas>
-                    <div id="menu">
-                        <span>applogo</span>
-                        <a href=""><i class="fa-solid fa-play"></i></a>
-                        <h1>APPNAME</h1>
-                        <h2>MENU</h2>
-                        <label for="menuBut">EXPAND-menu</label>
-                        <button type="button" id="menuBut" name="menuBut" value="menuBut" class="button" oninput=""><i
-                                class="fa-solid fa-bars"></i></button>
+        <form id="configurator" name="configurator" action="/request.php">
+            <div id="controls" class="formElement">
+                <button type="button" id="controlBut" name="controlBut" value="controlBut" class="button toggle"
+                    onclick="toggleFunction('toggleControls')"><i class="fa-solid fa-gears"></i></button>
+                <div id="toggleControls" class="expandable">
+                    <h2>CONTROLS</h2>
+                    <canvas id="detailView" width="200" height="200"></canvas>
+                    <label for="cScale">scale shape <i class="fa-solid fa-arrows-to-eye"></i></label>
+                    <input type="range" id="cScale" name="cScale" min="0.5" max="2" step="0.1" value="1" class="slider"
+                        oninput="resizeCanvas()" />
+                    <fieldset>
+                        <legend>shape:</legend>
+                        <input type="radio" id="eye" name="shape" value="eye" class="radio" oninput="resizeCanvas()"
+                            checked />
+                        <label for="eye">eye <i class="fa-solid fa-eye"></i></label>
+                        <input type="radio" id="heart" name="shape" value="heart" class="radio"
+                            oninput="resizeCanvas()" />
+                        <label for="heart">heart <i class="fa-regular fa-heart"></i></label>
                         <br>
-                        <label for="export">export</label>
-                        <button type="button" id="export" name="export" value="export" class="button" oninput=""><i
-                                class="fa-solid fa-file-export"></i></button>
-                        <label for="import">import</label>
-                        <button type="button" id="import" name="import" value="import" class="button" oninput=""><i
-                                class="fa-solid fa-file-import"></i></button>
-                        <label for="bCol">background color</label>
-                        <i class="fa-solid fa-fill-drip"></i>
-                        <input type="color" id="bCol" name="bCol" value="#f9f6ee" class="colpicker" oninput="recolor()" />
-                        <label for="sCol">shape color</label>
-                        <i class="fa-solid fa-paintbrush"></i>
-                        <input type="color" id="sCol" name="sCol" value="#4c0013" class="colpicker" oninput="recolor()" />
-                        <label for="reset">reset</label>
-                        <button type="button" id="reset" name="reset" value="reset" class="button" oninput=""><i
-                                class="fa-solid fa-rotate-right"></i></button>
-                        <label for="close">close</label>
-                        <button type="button" id="close" name="close" value="close" class="button" oninput=""><i
-                                class="fa-solid fa-xmark"></i></button>
-                    </div>
-                    <div id="controls">
-                        <h2>CONTROLS</h2>
-                        <label for="controlBut">EXPAND-controls</label>
-                        <button type="button" id="controlBut" name="controlBut" value="controlBut" class="button"
-                            oninput=""><i class="fa-solid fa-gears"></i></button>
-                        <fieldset>
-                            <legend>shape:</legend>
-                            <label for="eye">eye</label>
-                            <i class="fa-solid fa-eye"></i>
-                            <input type="radio" id="eye" name="shape" value="eye" class="radio" oninput="drawPattern()" checked />
-                            <label for="heart">heart</label>
-                            <i class="fa-solid fa-heart"></i>
-                            <input type="radio" id="heart" name="shape" value="heart" class="radio" oninput="drawPattern()" />
-                            <label for="drop">drop</label>
-                            <i class="fa-solid fa-droplet"></i>
-                            <input type="radio" id="drop" name="shape" value="drop" class="radio" oninput="drawPattern()" />
-                        </fieldset>
-                        <label for="xWidth">width</label>
-                        <i class="fa-solid fa-ruler-horizontal"></i>
-                        <input type="range" id="xWidth" name="xWidth" min="200" max="2000" step="50" value="500"
-                            class="slider" oninput="drawPattern()" />
-                        <label for="yHeight">height</label>
-                        <i class="fa-solid fa-ruler-vertical"></i>
-                        <input type="range" id="yHeight" name="yHeight" min="200" max="2000" step="50" value="500"
-                            class="slider" oninput="drawPattern()" />
-                        <label for="cSize">cell size</label>
-                        <i class="fa-solid fa-expand"></i>
-                        <input type="range" id="cSize" name="cSize" min="10" max="100" step="5" value="20"
-                            class="slider" oninput="drawPattern()" />
-                        <label for="sMin">min scale</label>
-                        <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
-                        <input type="range" id="sMin" name="sMin" min="0.1" max="1" step="0.02" value="0.1"
-                            class="slider" oninput="drawAttractor()" />
-                        <label for="sMax">max scale</label>
-                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-                        <input type="range" id="sMax" name="sMax" min="0.1" max="1" step="0.02" value="1" class="slider"
-                            oninput="drawAttractor()" />
-                        <fieldset>
-                            <legend>preview:</legend>
-                            <label for="contour">contour</label>
-                            <i class="fa-solid fa-shapes"></i>
-                            <input type="checkbox" id="contour" name="contour" value="contour" class="checkbox"
-                                oninput="drawPattern()" checked />
-                            <label for="panel">panel</label>
-                            <i class="fa-solid fa-square"></i>
-                            <input type="checkbox" id="heart" name="heart" value="heart" class="checkbox" oninput="drawPattern()"
-                                checked />
-                            <label for="grid">grid</label>
-                            <i class="fa-solid fa-table-cells"></i>
-                            <input type="checkbox" id="grid" name="grid" value="grid" class="checkbox" oninput="drawPattern()" />
-                            <label for="dim">dimension</label>
-                            <i class="fa-solid fa-ruler-combined"></i>
-                            <input type="checkbox" id="dim" name="dim" value="dim" class="checkbox" oninput="drawPattern()" />
-                        </fieldset>
-                    </div>
-                    <div id="attractor">
-                        <h2>ATTRACTOR</h2>
-                        <label for="attBut">EXPAND-attractor</label>
-                        <button type="button" id="attBut" name="attBut" value="attBut" class="button" oninput=""><i
-                                class="fa-solid fa-magnet"></i></button>
-                        <br>
-                        <canvas id="attractorView" width="200" height="200"></canvas>
-                        <fieldset>
-                            <legend>type:</legend>
-                            <label for="rad">radial</label>
-                            <i class="fa-regular fa-circle-dot"></i>
-                            <input type="radio" id="rad" name="aType" value="rad" class="radio" oninput="drawAttractor()" checked />
-                            <label for="ver">vertical</label>
-                            <i class="fa-solid fa-grip-lines-vertical"></i>
-                            <input type="radio" id="ver" name="aType" value="ver" class="radio" oninput="drawAttractor()" />
-                            <label for="hor">horizontal</label>
-                            <i class="fa-solid fa-grip-lines"></i>
-                            <input type="radio" id="hor" name="aType" value="hor" class="radio" oninput="drawAttractor()" />
-                            <label for="crv">curve</label>
-                            <i class="fa-solid fa-bezier-curve"></i>
-                            <input type="radio" id="crv" name="aType" value="crv" class="radio" oninput="drawAttractor()" />
-                        </fieldset>
-                    </div>
-                    <div id="zoom">
-                        <h2>ZOOM</h2>
-                        <label for="zoomBut">EXPAND-zoom</label>
-                        <button type="button" id="zoomBut" name="zoomBut" value="zoomBut" class="button" oninput=""><i
-                                class="fa-solid fa-magnifying-glass"></i></button>
-                        <br>
-                        <canvas id="detailView" width="200" height="200"></canvas>
-                        <br>
-                        <label for="zoom">zoom</label>
-                        <i class="fa-solid fa-magnifying-glass-minus"></i>
-                        <input type="range" id="zoom" name="zoom" min="2" max="10" step="0.2" value="2" class="slider"
-                            oninput="drawDetail()" />
-                        <i class="fa-solid fa-magnifying-glass-plus"></i>
-                        <label for="focus">set focus point</label>
-                        <button type="button" id="focus" name="focus" value="focus" class="button" oninput="drawDetail()"><i
-                                class="fa-solid fa-location-crosshairs"></i></button>
-                        <label for="xPos">x position</label>
-                        <input type="number" id="xPos" name="xPos" value="1000" class="num" oninput="drawDetail()" disabled />
-                        <label for="yPos">y position</label>
-                        <input type="number" id="yPos" name="yPos" value="1000" class="num" oninput="drawDetail()" disabled />
-                    </div>
-                </form>
+                        <input type="radio" id="drop" name="shape" value="drop" class="radio"
+                            oninput="resizeCanvas()" />
+                        <label for="drop">drop <i class="fa-solid fa-droplet"></i></label>
+                        <input type="radio" id="circle" name="shape" value="circle" class="radio"
+                            oninput="resizeCanvas()" />
+                        <label for="circle">circle <i class="fa-regular fa-circle"></i></label>
+                    </fieldset>
+                    <label for="xWidth">width <i class="fa-solid fa-ruler-horizontal"></i></label>
+                    <input type="range" id="xWidth" name="xWidth" min="200" max="2000" step="50" value="500"
+                        class="slider"
+                        oninput="document.getElementById('xNumber').value = document.getElementById('xWidth').value; resizeCanvas()" />
+                    <input type="number" id="xNumber" name="xNumber" value="500" step="0.5" class="num"
+                        onfocusout="dimensionUpdate()" oninput="dimensionUpdate()" />
+                    <label for="yHeight">height <i class="fa-solid fa-ruler-vertical"></i></label>
+                    <input type="range" id="yHeight" name="yHeight" min="200" max="2000" step="50" value="500"
+                        class="slider"
+                        oninput="document.getElementById('yNumber').value = document.getElementById('yHeight').value; resizeCanvas()" />
+                    <input type="number" id="yNumber" name="yNumber" value="500" step="0.5"
+                        onfocusout="dimensionUpdate()" oninput="dimensionUpdate()" />
+                    <label for="cSize">cell size <i class="fa-solid fa-expand"></i></label>
+                    <input type="range" id="cSize" name="cSize" min="10" max="100" step="5" value="20" class="slider"
+                        oninput="resizeCanvas()" />
+                </div>
             </div>
-        </section>
+            <div id="attractor" class="formElement">
+                <button type="button" id="attBut" name="attBut" value="attBut" class="button toggle"
+                    onclick="toggleFunction('toggleAttractor')"><i class="fa-solid fa-magnet"></i></button>
+                <div id="toggleAttractor" class="expandable">
+                    <h2>ATTRACTOR</h2>
+                    <canvas id="attractorView" width="200" height="200"></canvas>
+                    <label for="sMin">min scale <i class="fa-solid fa-down-left-and-up-right-to-center"></i></label>
+                    <input type="range" id="sMin" name="sMin" min="0.1" max="1" step="0.02" value="0.1" class="slider"
+                        oninput="resizeCanvas()" />
+                    <label for="sMax">max scale <i class="fa-solid fa-up-right-and-down-left-from-center"></i></label>
+                    <input type="range" id="sMax" name="sMax" min="0.1" max="1" step="0.02" value="1" class="slider"
+                        oninput="resizeCanvas()" />
+                    <fieldset>
+                        <legend>type:</legend>
+                        <input type="radio" id="rad" name="aType" value="rad" class="radio" oninput="resizeCanvas()"
+                            checked />
+                        <label for="rad">radial <i class="fa-regular fa-circle-dot"></i></label>
+                        <input type="radio" id="ver" name="aType" value="ver" class="radio" oninput="resizeCanvas()" />
+                        <label for="ver">vertical <i class="fa-solid fa-grip-lines-vertical"></i></label>
+                        <br>
+                        <input type="radio" id="hor" name="aType" value="hor" class="radio" oninput="resizeCanvas()" />
+                        <label for="hor">horizontal <i class="fa-solid fa-grip-lines"></i></label>
+                        <input type="radio" id="crv" name="aType" value="crv" class="radio" oninput="resizeCanvas()" />
+                        <label for="crv">parabol <i class="fa-solid fa-bezier-curve"></i></label>
+                    </fieldset>
 
+                    <button type="button" id="center" name="center" value="center" class="button"
+                        onclick="document.getElementById('xAtt').value = 0;document.getElementById('yAtt').value = 0; resizeCanvas()"><label
+                            for="center">center <i class="fa-solid fa-location-crosshairs"></i></label></button>
+                    <label for="xAtt">x-offset</label>
+                    <input type="number" id="xAtt" name="xAtt" value="0" class="num" oninput="" disabled />
+                    <label for="yAtt">y-offset</label>
+                    <input type="number" id="yAtt" name="yAtt" value="0" class="num" oninput="" disabled />
+                </div>
+            </div>
+            <div id="message" class="formElement">
+                <button type="button" id="request" name="request" value="request" class="button toggle"
+                    onclick="toggleFunction('toggleMessage')"><i class="fa-regular fa-envelope"></i></button>
+                <div id="toggleMessage" class="expandable">
+                    <h2>MESSAGE</h2>
+                    <p>Interested? <br>
+                        Send a message for an inquiry, request or general questions along with your generated
+                        pattern.
+                    </p>
+                    <label for="fullname">full name:</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                    <label for="mailaddress">e-mail:</label>
+                    <input type="text" id="mailaddress" name="mailaddress" required>
+                    <label for="message">message:</label>
+                    <input type="text" id="message" name="message" required>
+                    <span><input type="checkbox" id="ok" name="ok" required>
+                        <label for="ok">I agrree to terms and conditions.</label></span>
+
+                    <button type="submit" id="send" name="send" class="button"><label for="send">send <i
+                                class="fa-regular fa-paper-plane"></i></label></button>
+                </div>
+            </div>
+        </form>
     </main>
+    <div id="navigation">
+        <div id="toggleZoom">
+            <h2 class="hidden">NAVIGATION</h2>
+            <fieldset>
+                <legend>preview:</legend>
+                <input type="checkbox" id="contour" name="contour" value="contour" class="checkbox"
+                    oninput="resizeCanvas()" checked />
+                <label for="contour">contour <i class="fa-solid fa-shapes"></i></label>
+                <input type="checkbox" id="panel" name="panel" value="panel" class="checkbox" oninput="resizeCanvas()"
+                    checked />
+                <label for="panel">panel <i class="fa-solid fa-square"></i></label>
+                <input type="checkbox" id="grid" name="grid" value="grid" class="checkbox" oninput="resizeCanvas()"
+                    checked />
+                <label for="grid">grid <i class="fa-solid fa-table-cells"></i></label>
+                <input type="checkbox" id="dim" name="dim" value="dim" class="checkbox" oninput="resizeCanvas()"
+                    checked />
+                <label for="dim">dimension <i class="fa-solid fa-ruler-combined"></i></label>
+            </fieldset>
+            <span>
+                <label for="zoom">zoom <i class="fa-solid fa-magnifying-glass-minus"></i></label>
+                <input type="range" id="zoom" name="zoom" min="1" max="10" step="0.2" value="1" class="slider"
+                    oninput="resizeCanvas()" />
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </span>
+            <div id="navControl">
+                <div></div>
+                <button type="button" id="up" name="up" value="up" class="button" onclick=""
+                    onmousedown="intervalOn('up')" onmouseup="intervalOff()"><i
+                        class="fa-solid fa-angle-up"></i></button>
+                <div></div>
+                <button type="button" id="left" name="left" value="left" class="button" onclick=""
+                    onmousedown="intervalOn('left')" onmouseup="intervalOff()"><i
+                        class="fa-solid fa-angle-left"></i></button>
+                <button type="button" id="focus" name="focus" value="focus" class="button"
+                    onclick="document.getElementById('xPos').value = 0;document.getElementById('yPos').value = 0; resizeCanvas()"><i
+                        class="fa-solid fa-location-crosshairs"></i></button>
+                <button type="button" id="right" name="right" value="right" class="button" onclick=""
+                    onmousedown="intervalOn('right')" onmouseup="intervalOff()"><i
+                        class="fa-solid fa-angle-right"></i></button>
+                <div></div>
+                <button type="button" id="down" name="down" value="down" class="button" onclick=""
+                    onmousedown="intervalOn('down')" onmouseup="intervalOff()"><i
+                        class="fa-solid fa-angle-down"></i></button>
+                <div></div>
+            </div>
+            <label for="xPos">x:</label>
+            <input type="number" id="xPos" name="xPos" value="0" class="num" oninput="" disabled />
+            <label for="yPos">y:</label>
+            <input type="number" id="yPos" name="yPos" value="0" class="num" oninput="" disabled />
+        </div>
+        <button type="button" id="zoomBut" name="zoomBut" value="zoomBut" class="button toggle"
+            onclick="toggleFunction('toggleZoom')"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+    </div>
+    <footer></footer>
 </body>
-<footer>
-</footer>
 
 </html>
